@@ -126,71 +126,96 @@ namespace Cells.Start
                         //int D = Convert.ToInt32(str);
                         ////находим массу твердого вещества
                         //int M = -(1 / G) ^ (1 / 4) * (v / D) ^ (-3 / 4) * 1 * (250 - Field[x, y].concentration);
+                        int I, J;
                         for (int i = x-1; i <=x+1; i++)
                         {
                             for (int j = y-1; j < y+1; j++)
                             {
+                                I = i;
+                                J = j;
+
+                                if (x - 1 < 0 )
+                                {
+                                    
+                                    I = rows;
+
+                                }
+                                if ( y - 1 < 0 )
+                                {
+                                    
+                                    J = cols;
+                                }
+                                if ( x + 1 > rows )
+                                {
+                                    
+                                    I = 0;
+                                }
+                                if ( y + 1 > cols)
+                                {
+                                    
+                                    J = 0;
+                                }
+
                                 if (i != x && j != y && Field[i, j].concentration < 250)
                                 {
-                                    if ((i != x - 1 & j != y - 1) | (i != x - 1 & j != y + 1) | (i != x + 1 & j != y - 1) | (i != x + 1 & j != y + 1))
+                                    if ((i != x - 1 & j != y - 1) | (i != x - 1 & j != y + 1) | (i != x + 1 & j != y - 1) | (i != x + 1 & j != y + 1)|(i != I & j !=J) | (i != I & j != y - 1) | (i != I & j != y + 1) | (i != x - 1 & j != J) | (i != x + 1 & j != J))
                                     {
                                         dC = k * (250.0 - Field[x, y].concentration);
                                         int new_dC = Convert.ToInt32(dC);
                                         //Field[i, j].concentration = -new_dC;
-                                        Field_for_calculation[i, j].accumulation_concentration = -new_dC;
-                                }
-                            }
-
-                        }
-                        }
-                 
-                    }
-                }
-            }
-        }
-
-        public void Transition_Rule_diffusion()
-        {
-            double D = 0.6;
-            for (int x = 0; x < rows; x++)
-            {
-                for (int y = 0; y < cols; y++)
-                {
-
-                    if (Field[x, y].concentration < 250)
-                    {
-                        double dC;
-
-                        for (int i = x - 1; i <= x + 1; i++)
-                        {
-                            for (int j = y - 1; j < y + 1; j++)
-                            {
-                                if (i!=x && j!=y && Field[i, j].concentration < 250 && Field[i, j].concentration > Field[x, y].concentration)
-                                {
-                                    if ((i != x - 1 & j != y - 1) | (i != x - 1 & j != y + 1) | (i != x + 1 & j != y - 1) | (i != x + 1 & j != y + 1))
-                                    {
-                                        dC = D * (Field[i, j].concentration - Field[x, y].concentration);
-                                        int new_dC = Convert.ToInt32(dC);
-                                        Field_for_calculation[i,j].accumulation_concentration = -new_dC;
-                                        Field_for_calculation[x,y].accumulation_concentration = +new_dC;
+                                        Field_for_calculation[I, J].accumulation_concentration = -new_dC;
                                     }
                                 }
-                                if (i != x && j != y && Field[i, j].concentration < 250 && Field[i, j].concentration < Field[x, y].concentration)
-                                {
-                                    if ((i != x - 1 & j != y - 1) | (i != x - 1 & j != y + 1) | (i != x + 1 & j != y - 1) | (i != x + 1 & j != y + 1))
-                                    {
-                                        dC = D * (Field[x, y].concentration - Field[i, j].concentration);
-                                        int new_dC = Convert.ToInt32(dC);
-                                        Field_for_calculation[i, j].accumulation_concentration = +new_dC;
-                                        Field_for_calculation[x, y].accumulation_concentration = -new_dC;
-                                    }
-                                }
+                                
                             }
                         }
                     }
                 }
             }
         }
+
+        //public void Transition_Rule_diffusion()
+        //{
+        //    double D = 0.6;
+        //    for (int x = 0; x < rows; x++)
+        //    {
+        //        for (int y = 0; y < cols; y++)
+        //        {
+
+        //            if (Field[x, y].concentration < 250)
+        //            {
+        //                double dC;
+
+        //                for (int i = x - 1; i <= x + 1; i++)
+        //                {
+        //                    for (int j = y - 1; j < y + 1; j++)
+        //                    {
+        //                        if (i!=x && j!=y && Field[i, j].concentration < 250 && Field[i, j].concentration > Field[x, y].concentration)
+        //                        {
+        //                            if ((i != x - 1 & j != y - 1) | (i != x - 1 & j != y + 1) | (i != x + 1 & j != y - 1) | (i != x + 1 & j != y + 1))
+        //                            {
+        //                                dC = D * (Field[i, j].concentration - Field[x, y].concentration);
+        //                                int new_dC = Convert.ToInt32(dC);
+        //                                Field_for_calculation[i,j].accumulation_concentration = -new_dC;
+        //                                Field_for_calculation[x,y].accumulation_concentration = +new_dC;
+        //                            }
+        //                        }
+        //                        if (i != x && j != y && Field[i, j].concentration < 250 && Field[i, j].concentration < Field[x, y].concentration)
+        //                        {
+        //                            if ((i != x - 1 & j != y - 1) | (i != x - 1 & j != y + 1) | (i != x + 1 & j != y - 1) | (i != x + 1 & j != y + 1))
+        //                            {
+        //                                dC = D * (Field[x, y].concentration - Field[i, j].concentration);
+        //                                int new_dC = Convert.ToInt32(dC);
+        //                                Field_for_calculation[i, j].accumulation_concentration = +new_dC;
+        //                                Field_for_calculation[x, y].accumulation_concentration = -new_dC;
+        //                            }
+        //                        }
+        //                    }
+        //                }
+        //            }
+        //        }
+        //    }
+        //}
         public void Transformation()
         {
             for (int i = 0; i < rows; i++)

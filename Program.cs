@@ -53,7 +53,7 @@ namespace Cells.Start
                 Console.WriteLine();
             }
             cellularAutomata.Transition_Rule_dissolution();
-            cellularAutomata.Transition_Rule_diffusion();
+            //cellularAutomata.Transition_Rule_diffusion();
             cellularAutomata.Transformation();
             Console.WriteLine("Click to update the field");
             for (int y = 0; y < cellularAutomata.Field.GetLength(1); y++)
