@@ -1,0 +1,16 @@
+D:\Дипломная работа\Клеточный автомат\Cells.Start\bin\Debug\net5.0\Cells.Start.exe
+D:\Дипломная работа\Клеточный автомат\Cells.Start\bin\Debug\net5.0\Cells.Start.deps.json
+D:\Дипломная работа\Клеточный автомат\Cells.Start\bin\Debug\net5.0\Cells.Start.runtimeconfig.json
+D:\Дипломная работа\Клеточный автомат\Cells.Start\bin\Debug\net5.0\Cells.Start.runtimeconfig.dev.json
+D:\Дипломная работа\Клеточный автомат\Cells.Start\bin\Debug\net5.0\Cells.Start.dll
+D:\Дипломная работа\Клеточный автомат\Cells.Start\bin\Debug\net5.0\ref\Cells.Start.dll
+D:\Дипломная работа\Клеточный автомат\Cells.Start\bin\Debug\net5.0\Cells.Start.pdb
+D:\Дипломная работа\Клеточный автомат\Cells.Start\obj\Debug\net5.0\Cells.Start.csproj.AssemblyReference.cache
+D:\Дипломная работа\Клеточный автомат\Cells.Start\obj\Debug\net5.0\Cells.Start.GeneratedMSBuildEditorConfig.editorconfig
+D:\Дипломная работа\Клеточный автомат\Cells.Start\obj\Debug\net5.0\Cells.Start.AssemblyInfoInputs.cache
+D:\Дипломная работа\Клеточный автомат\Cells.Start\obj\Debug\net5.0\Cells.Start.AssemblyInfo.cs
+D:\Дипломная работа\Клеточный автомат\Cells.Start\obj\Debug\net5.0\Cells.Start.csproj.CoreCompileInputs.cache
+D:\Дипломная работа\Клеточный автомат\Cells.Start\obj\Debug\net5.0\Cells.Start.dll
+D:\Дипломная работа\Клеточный автомат\Cells.Start\obj\Debug\net5.0\ref\Cells.Start.dll
+D:\Дипломная работа\Клеточный автомат\Cells.Start\obj\Debug\net5.0\Cells.Start.pdb
+D:\Дипломная работа\Клеточный автомат\Cells.Start\obj\Debug\net5.0\Cells.Start.genruntimeconfig.cache
