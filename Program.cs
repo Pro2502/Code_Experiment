@@ -4,77 +4,28 @@ namespace Cells.Start
 {
     class Program
     {
-        //public void Output()
-        //{
-        //    CellularAutomata cellularAutomata = new CellularAutomata();
-        //    for (int y = 0; y < cellularAutomata.Field.GetLength(1); y++)
-        //    {
-        //        for (int x = 0; x < cellularAutomata.Field.GetLength(0); x++)
-        //        {
-        //            if (cellularAutomata.Field[x, y].concentration >= 250)
-        //            {
-        //                Console.ForegroundColor = ConsoleColor.Red;
-        //                Console.Write("T ");
-        //                Console.ResetColor();
-
-        //            }
-                        
-        //            else if (cellularAutomata.Field[x, y].concentration < 250 && cellularAutomata.Field[x, y].concentration > 0)
-        //                Console.Write("L ");
-        //            else
-        //                Console.Write(" ");
-
-        //        }
-        //        Console.WriteLine();
-        //    }
-        //}
         static void Main(string[] args)
         {
+            bool can_update = true;
             CellularAutomata cellularAutomata = new CellularAutomata ();
             cellularAutomata.Initialisation();
-            for (int y = 0; y < cellularAutomata.Field.GetLength(1); y++)
+            cellularAutomata.Field_output();
+            while (can_update)
             {
-                for (int x = 0; x < cellularAutomata.Field.GetLength(0); x++)
+                Console.WriteLine("Press the space bar to update the field");
+                string str = Console.ReadLine();
+                if (str == " ")
                 {
-                    if (cellularAutomata.Field[x, y].concentration >= 250)
-                    {
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.Write("T ");
-                        Console.ResetColor();
-
-                    }
-                        
-                    else if (cellularAutomata.Field[x, y].concentration < 250 && cellularAutomata.Field[x, y].concentration > 0)
-                        Console.Write("L ");
-                    else
-                        Console.Write(" ");
-
+                    cellularAutomata.Transition_Rule_dissolution();
+                    //cellularAutomata.Transition_Rule_diffusion();
+                    cellularAutomata.Transformation();
+                    cellularAutomata.Field_output();
                 }
-                Console.WriteLine();
-            }
-            cellularAutomata.Transition_Rule_dissolution();
-            //cellularAutomata.Transition_Rule_diffusion();
-            cellularAutomata.Transformation();
-            Console.WriteLine("Click to update the field");
-            for (int y = 0; y < cellularAutomata.Field.GetLength(1); y++)
-            {
-                for (int x = 0; x < cellularAutomata.Field.GetLength(0); x++)
+                else
                 {
-                    if (cellularAutomata.Field[x, y].concentration >= 250)
-                    {
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.Write("T ");
-                        Console.ResetColor();
-
-                    }
-
-                    else if (cellularAutomata.Field[x, y].concentration < 250 && cellularAutomata.Field[x, y].concentration > 0)
-                        Console.Write("L ");
-                    else
-                        Console.Write(" ");
-
+                    Console.WriteLine("!!!You have exited the dissolution visualization program!!!");
+                    can_update = false;
                 }
-                Console.WriteLine();
             }
         }
     }

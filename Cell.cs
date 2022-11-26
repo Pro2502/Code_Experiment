@@ -9,6 +9,7 @@ namespace Cells.Start
 
     class Cell 
     {
+        public int saturated_solution = 5;
         public float x { get; set; }
         public float y { get; set; }
         
@@ -17,7 +18,7 @@ namespace Cells.Start
         public bool Luquid { get; private set; }
         private void Switch_Solid ()
         {
-            if (concentration<250)
+            if (concentration< saturated_solution)
             {
                 IsSolid = false;
             }
@@ -35,12 +36,12 @@ namespace Cells.Start
         }
         public bool CalcSolid()
         {
-            return concentration >=250;
+            return concentration >= saturated_solution;
 
         }
         public bool CalcLuquid()
         {
-            return concentration < 250;
+            return concentration < saturated_solution;
 
         }
         
