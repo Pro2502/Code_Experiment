@@ -16,7 +16,7 @@ namespace Cells.Start
         public int maximum_concentration = 9;
         public Cell[,] Field;
         public Calculation[,] Field_for_calculation;
-        static void StartCreate (ref Cell[,] Field,ref Calculation[,] Field_for_calculation, int rows, int cols)
+        static void StartCreate (Cell[,] Field,Calculation[,] Field_for_calculation, int rows, int cols)
         {
             for (int x = 0; x < rows; x++)
             {
@@ -35,7 +35,7 @@ namespace Cells.Start
             Field = new Cell[rows, cols];
             Field_for_calculation = new Calculation[rows, cols];
 
-            CellularAutomata.StartCreate(ref Field,ref Field_for_calculation, rows, cols);
+            CellularAutomata.StartCreate(Field,Field_for_calculation, rows, cols);
             
             Console.WriteLine("Set the diameter of the tablet in the amount of 1 to 4");
             string str = Console.ReadLine();
@@ -152,29 +152,31 @@ namespace Cells.Start
                                 I = i;
                                 J = j;
 
-                                if (x - 1 < 0 )
+                                if (I < 0 )
                                 {
                                     I = rows - 1;
                                 }
-                                if ( y - 1 < 0 )
+                                if ( J < 0 )
                                 {
                                     
                                     J = cols-1;
                                 }
-                                if ( x + 1 > rows-1 )
+                                if ( I > rows-1 )
                                 {
                                     
                                     I = 0;
                                 }
-                                if ( y + 1 > cols-1)
+                                if ( J > cols-1)
                                 {
                                     
                                     J = 0;
                                 }
+                                if (I==x && J==y)
+                                continue;
                                 
-                                 if (I != x && J != y && Field[I, J].concentration < saturated_solution)
+                                 if (Field[I, J].concentration < saturated_solution)
                                     {
-                                        if ((I != x - 1 && J != y-1 ) || (I != x - 1 && J != y + 1) ||(I != x + 1 && J != y - 1) || (I != x + 1 && J != y + 1) )
+                                        if ((I != (x - 1) & J == y ) | (I == x & J != (y + 1)) | (I != (x + 1) & J == y) | (I == x & J != (y - 1)))
                                         {
                                             dC = -k * (saturated_solution - Field[x, y].concentration);
                                             int new_dC = Convert.ToInt32(dC);
@@ -182,6 +184,7 @@ namespace Cells.Start
                                             Field_for_calculation[I, J].accumulation_concentration = Field_for_calculation[I, J].accumulation_concentration + new_dC;
                                             Field_for_calculation[x, y].accumulation_concentration = Field_for_calculation[x, y].accumulation_concentration - new_dC;
                                         }
+                                       
                                  }
                             }
                         }
@@ -190,73 +193,74 @@ namespace Cells.Start
             }
         }
 
-        //public void Transition_Rule_diffusion()
-        //{
-        //    double D = 0.1;
-        //    for (int x = 0; x < rows; x++)
-        //    {
-        //        for (int y = 0; y < cols; y++)
-        //        {
+        public void Transition_Rule_diffusion()
+        {
+            double D = 0.5;
+            for (int x = 0; x < Field.GetLength(0); x++)
+            {
+                for (int y = 0; y < Field.GetLength(1); y++)
+                {
 
-        //            if (Field[x, y].concentration < saturated_solution)
-        //            {
-        //                double dC;
-        //                int I, J;
-        //                for (int i = x - 1; i <= x + 1; i++)
-        //                {
-        //                    for (int j = y - 1; j < y + 1; j++)
-        //                    {
-        //                        I = i;
-        //                        J = j;
+                    if (Field[x, y].concentration < saturated_solution)
+                    {
+                        double dC;
+                        int I, J;
+                        for (int i = x - 1; i <= x + 1; i++)
+                        {
+                            for (int j = y - 1; j < y + 1; j++)
+                            {
+                                I = i;
+                                J = j;
 
-        //                        if (x - 1 < 0)
-        //                        {
+                                if (I < 0)
+                                {
+                                    I = rows - 1;
+                                }
+                                if (J < 0)
+                                {
 
-        //                            I = rows - 1;
+                                    J = cols - 1;
+                                }
+                                if (I > rows - 1)
+                                {
 
-        //                        }
-        //                        if (y - 1 < 0)
-        //                        {
+                                    I = 0;
+                                }
+                                if (J > cols - 1)
+                                {
 
-        //                            J = cols - 1;
-        //                        }
-        //                        if (x + 1 > rows-1)
-        //                        {
+                                    J = 0;
+                                }
+                                if (I == x && J == y)
+                                    continue;
+                                if ((I != (x - 1) & J == y) | (I == x & J != (y + 1)) | (I != (x + 1) & J == y) | (I == x & J != (y - 1)))
+                                {
+                                    if (Field[I, J].concentration < saturated_solution)
+                                    {
+                                        if (Field[I, J].concentration >= Field[x, y].concentration)
+                                        {
+                                            dC = D * (Field[I, J].concentration - Field[x, y].concentration);
+                                            int new_dC = Convert.ToInt32(dC);
+                                            Field_for_calculation[I, J].accumulation_concentration = Field_for_calculation[I, J].accumulation_concentration - new_dC;
+                                            Field_for_calculation[x, y].accumulation_concentration = Field_for_calculation[x, y].accumulation_concentration + new_dC;
+                                        }
 
-        //                            I = 0;
-        //                        }
-        //                        if (y + 1 > cols-1)
-        //                        {
-
-        //                            J = 0;
-        //                        }
-
-        //                        if (I != x && J != y && Field[I, J].concentration < saturated_solution && Field[I, J].concentration > Field[x, y].concentration)
-        //                        {
-        //                            if ((I != x - 1 & J != y - 1) | (I != x - 1 & J != y + 1) | (I != x + 1 & J != y - 1) | (I != x + 1 & J != y + 1))
-        //                            {
-        //                                dC = D * (Field[I, J].concentration - Field[x, y].concentration);
-        //                                int new_dC = Convert.ToInt32(dC);
-        //                                Field_for_calculation[I, J].accumulation_concentration = -new_dC;
-        //                                Field_for_calculation[x, y].accumulation_concentration = +new_dC;
-        //                            }
-        //                        }
-        //                        if (I != x && J != y && Field[I, J].concentration < saturated_solution && Field[I, J].concentration < Field[x, y].concentration)
-        //                        {
-        //                            if (((I != x - 1 & J != y - 1) | (I != x - 1 & J != y + 1) | (I != x + 1 & J != y - 1) | (I != x + 1 & J != y + 1)))
-        //                            {
-        //                                dC = D * (Field[x, y].concentration - Field[I, J].concentration);
-        //                                int new_dC = Convert.ToInt32(dC);
-        //                                Field_for_calculation[I, J].accumulation_concentration = +new_dC;
-        //                                Field_for_calculation[x, y].accumulation_concentration = -new_dC;
-        //                            }
-        //                        }
-        //                    }
-        //                }
-        //            }
-        //        }
-        //    }
-        //}
+                                        else
+                                        {
+                                            dC = D * (Field[x, y].concentration - Field[I, J].concentration);
+                                            int new_dC = Convert.ToInt32(dC);
+                                            Field_for_calculation[I, J].accumulation_concentration = Field_for_calculation[I, J].accumulation_concentration + new_dC;
+                                            Field_for_calculation[x, y].accumulation_concentration = Field_for_calculation[x, y].accumulation_concentration - new_dC;
+                                        }
+                                    }
+                                }
+                                
+                            }
+                        }
+                    }
+                }
+            }
+        } 
         public void Transformation()
         {
             for (int i = 0; i < rows; i++)
@@ -264,9 +268,15 @@ namespace Cells.Start
                 for (int j = 0; j < cols; j++)
                 {
                     Field[i, j].concentration = Field[i, j].concentration + Field_for_calculation[i, j].accumulation_concentration;
+                    Field_for_calculation[i, j].accumulation_concentration = 0;
+                    if (Field[i,j].concentration<0)
+                    {
+                        Field[i, j].concentration = 0;
+                    }
                 }
             }
         }
+       
         public void Field_output()
         {
             for (int x = 0; x < Field.GetLength(0); x++)

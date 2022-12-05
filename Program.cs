@@ -17,7 +17,9 @@ namespace Cells.Start
                 if (str == " ")
                 {
                     cellularAutomata.Transition_Rule_dissolution();
-                    //cellularAutomata.Transition_Rule_diffusion();
+                    cellularAutomata.Transformation();
+                    
+                    cellularAutomata.Transition_Rule_diffusion();
                     cellularAutomata.Transformation();
                     cellularAutomata.Field_output();
                 }
