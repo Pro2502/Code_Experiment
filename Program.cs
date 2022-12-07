@@ -12,15 +12,15 @@ namespace Cells.Start
             cellularAutomata.Field_output();
             while (can_update)
             {
-                Console.WriteLine("Press the space bar to update the field");
+                Console.WriteLine("Press ENTER to go through the next iteration");
                 string str = Console.ReadLine();
-                if (str == " ")
+                if (str == "")
                 {
                     cellularAutomata.Transition_Rule_dissolution();
-                    cellularAutomata.Transformation();
-                    
+                    //cellularAutomata.Transformation();
+                    cellularAutomata.Field_output();
                     cellularAutomata.Transition_Rule_diffusion();
-                    cellularAutomata.Transformation();
+                    //cellularAutomata.Transformation();
                     cellularAutomata.Field_output();
                 }
                 else

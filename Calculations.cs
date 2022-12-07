@@ -11,7 +11,7 @@ namespace Cells.Start
 		public float x { get; set; }
 		public float y { get; set; }
 
-		public int accumulation_concentration;
+		//public int accumulation_concentration;
 
 	}
 }
