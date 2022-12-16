@@ -12,8 +12,8 @@ namespace Cells.Start
         static int Y;
         public int rows = 5;
         public int cols = 5;
-        public int saturated_solution = 5;
-        public int maximum_concentration = 12;
+        public double saturated_solution = 6;
+        public double maximum_concentration = 12;
         public Cell[,] Field;
         //public Calculation[,] Field_for_calculation;
         static void StartCreate (Cell[,] Field,/*Calculation[,] Field_for_calculation,*/ int rows, int cols)
@@ -183,14 +183,21 @@ namespace Cells.Start
                                     {
                                         if ((I != (x - 1) & J == y ) | (I == x & J != (y + 1)) | (I != (x + 1) & J == y) | (I == x & J != (y - 1)))
                                         {
-                                        dC = -k * (saturated_solution - Field[x, y].concentration);
-                                        int new_dC = Convert.ToInt32(dC);
-                                        new_dC = 1;
-                                        int limitation = Field[x, y].concentration -new_dC;
+                                        if (saturated_solution > Field[x, y].concentration)
+                                        {
+                                            dC = -k * (saturated_solution - Field[x, y].concentration);
+                                        }
+                                        else
+                                        {
+                                            dC = k;
+                                        }
+                                        //int new_dC = Convert.ToInt32(dC);
+                                        //new_dC = 1;
+                                        double limitation = Field[x, y].concentration -dC;
                                         if (limitation>=0)
                                         {
-                                            Field[I, J].concentration +=  new_dC;
-                                            Field[x, y].concentration -=  new_dC;
+                                            Field[I, J].concentration += dC /*new_dC*/;
+                                            Field[x, y].concentration -= dC /*new_dC*/;
                                         }
                                         //Field_for_calculation[I, J].accumulation_concentration += new_dC;
                                         //Field_for_calculation[x, y].accumulation_concentration -= new_dC;
@@ -256,32 +263,16 @@ namespace Cells.Start
                                         if (Field[I, J].concentration > Field[x, y].concentration)
                                         {
                                             dC = D * (Field[I, J].concentration - Field[x, y].concentration);
-                                            int new_dC = Convert.ToInt32(dC);
-                                            new_dC = 1;
-                                            int limitation = Field[I, J].concentration -new_dC;
+                                            //int new_dC = Convert.ToInt32(dC);
+                                            //new_dC = 1;
+                                            double limitation = Field[I, J].concentration -dC;
                                             if (limitation >= 0)
                                             {
-                                                Field[I, J].concentration -= new_dC;
-                                                Field[x, y].concentration += new_dC;
+                                                Field[I, J].concentration -= dC/*new_dC*/;
+                                                Field[x, y].concentration += dC/*new_dC*/;
                                             }
                                             //Field_for_calculation[I, J].accumulation_concentration = Field_for_calculation[I, J].accumulation_concentration - new_dC;
                                             //Field_for_calculation[x, y].accumulation_concentration = Field_for_calculation[x, y].accumulation_concentration + new_dC;
-
-                                        }
-
-                                        else
-                                        {
-                                            dC = D * (Field[x, y].concentration - Field[I, J].concentration);
-                                            int new_dC = Convert.ToInt32(dC);
-                                            new_dC = 1;
-                                            int limitation = Field[x, y].concentration -new_dC;
-                                            if (limitation >= 0)
-                                            {
-                                                Field[I, J].concentration += new_dC;
-                                                Field[x, y].concentration -= new_dC;
-                                            }
-                                            //Field_for_calculation[I, J].accumulation_concentration = Field_for_calculation[I, J].accumulation_concentration + new_dC;
-                                            //Field_for_calculation[x, y].accumulation_concentration = Field_for_calculation[x, y].accumulation_concentration - new_dC;
 
                                         }
                                     }
@@ -320,7 +311,7 @@ namespace Cells.Start
                     if (Field[x, y].concentration >= saturated_solution)
                     {
                         Console.ForegroundColor = ConsoleColor.Red;
-                        Console.Write(Field[x, y].concentration + " ");
+                        Console.Write(Math.Round(Field[x, y].concentration, 1) + " ");
                         Console.ResetColor();
 
                     }
@@ -329,14 +320,14 @@ namespace Cells.Start
                     {
                         Console.ForegroundColor = ConsoleColor.Blue;
                         //Console.Write("L ");
-                        Console.Write(Field[x, y].concentration + " ");
+                        Console.Write(Math.Round(Field[x, y].concentration, 1) + " ");
                         Console.ResetColor();
                     }
                     else
                     {
                         Console.ForegroundColor = ConsoleColor.White;
                         //Console.Write(" ");
-                        Console.Write(Field[x, y].concentration +" ");
+                        Console.Write(Math.Round(Field[x, y].concentration, 1) + " ");
                         Console.ResetColor();
                     }
 

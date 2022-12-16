@@ -9,11 +9,11 @@ namespace Cells.Start
 
     class Cell 
     {
-        public int saturated_solution = 5;
+        public double saturated_solution = 5;
         public float x { get; set; }
         public float y { get; set; }
         
-        public int concentration;
+        public double concentration;
         public bool IsSolid { get; private set; }
         public bool Luquid { get; private set; }
         private void Switch_Solid ()
@@ -31,7 +31,8 @@ namespace Cells.Start
             }
             get
             {
-                return concentration;
+                int new_C = Convert.ToInt32(concentration);
+                return new_C;
             }
         }
         public bool CalcSolid()
