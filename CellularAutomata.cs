@@ -15,6 +15,9 @@ namespace Cells.Start
         public double saturated_solution = 6;
         public double maximum_concentration = 12;
         public Cell[,] Field;
+        int iteration=0;
+        bool no_end = true;
+
         //public Calculation[,] Field_for_calculation;
         static void StartCreate (Cell[,] Field,/*Calculation[,] Field_for_calculation,*/ int rows, int cols)
         {
@@ -283,6 +286,7 @@ namespace Cells.Start
                     }
                 }
             }
+            iteration++;
         }
         //public void Transformation()
         //{
@@ -336,6 +340,32 @@ namespace Cells.Start
                 Console.WriteLine();
             }
             Console.WriteLine("\n");
+        }
+
+        public void Iteration_Count(ref bool no_end)
+        {
+            bool equality = false;
+            double approximate_concentration = Math.Round(Field[0, 0].concentration, 3); 
+            for (int x = 0; x < Field.GetLength(0); x++)
+            {
+                for (int y = 0; y < Field.GetLength(1); y++)
+                {
+                    if (approximate_concentration== Math.Round(Field[x, y].concentration, 3))
+                    {
+                        equality = true;
+                    }
+                    else
+                    {
+                        equality = false;
+                        break;
+                    }
+                }
+            }
+            if (equality)
+            {
+                Console.WriteLine("The total time for the dissolution of Arogel:"+ iteration);
+                no_end = false;
+            }
         }
     }
 }
