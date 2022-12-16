@@ -10,8 +10,8 @@ namespace Cells.Start
     {
         static int X;
         static int Y;
-        public int rows = 5;
-        public int cols = 5;
+        public int rows = 10;
+        public int cols = 10;
         public double saturated_solution = 6;
         public double maximum_concentration = 12;
         public Cell[,] Field;

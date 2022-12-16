@@ -18,9 +18,11 @@ namespace Cells.Start
                 {
                     cellularAutomata.Transition_Rule_dissolution();
                     //cellularAutomata.Transformation();
+                    Console.WriteLine("After dissolution");
                     cellularAutomata.Field_output();
                     cellularAutomata.Transition_Rule_diffusion();
                     //cellularAutomata.Transformation();
+                    Console.WriteLine("After diffusion");
                     cellularAutomata.Field_output();
                 }
                 else
