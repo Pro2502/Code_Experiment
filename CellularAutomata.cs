@@ -10,13 +10,14 @@ namespace Cells.Start
     {
         static int X;
         static int Y;
-        public int rows = 10;
-        public int cols = 10;
+        public int rows = 5;
+        public int cols = 5;
         public double saturated_solution = 6;
         public double maximum_concentration = 12;
         public Cell[,] Field;
         int iteration=0;
         bool no_end = true;
+        public double quantity =0;
 
         //public Calculation[,] Field_for_calculation;
         static void StartCreate (Cell[,] Field,/*Calculation[,] Field_for_calculation,*/ int rows, int cols)
@@ -127,7 +128,7 @@ namespace Cells.Start
         }
         public void Transition_Rule_dissolution()
         {
-
+            
             double k =0.2;
             for (int x = 0; x < Field.GetLength(0); x++)
             {
@@ -201,6 +202,7 @@ namespace Cells.Start
                                         {
                                             Field[I, J].concentration += dC /*new_dC*/;
                                             Field[x, y].concentration -= dC /*new_dC*/;
+                                            quantity += dC;
                                         }
                                         //Field_for_calculation[I, J].accumulation_concentration += new_dC;
                                         //Field_for_calculation[x, y].accumulation_concentration -= new_dC;
@@ -273,6 +275,7 @@ namespace Cells.Start
                                             {
                                                 Field[I, J].concentration -= dC/*new_dC*/;
                                                 Field[x, y].concentration += dC/*new_dC*/;
+                                                quantity += dC;
                                             }
                                             //Field_for_calculation[I, J].accumulation_concentration = Field_for_calculation[I, J].accumulation_concentration - new_dC;
                                             //Field_for_calculation[x, y].accumulation_concentration = Field_for_calculation[x, y].accumulation_concentration + new_dC;
@@ -345,6 +348,7 @@ namespace Cells.Start
         public void Iteration_Count(ref bool no_end)
         {
             bool equality = false;
+            Console.WriteLine("Concentration change = " + quantity);
             double approximate_concentration = Math.Round(Field[0, 0].concentration, 3); 
             for (int x = 0; x < Field.GetLength(0); x++)
             {
@@ -364,6 +368,7 @@ namespace Cells.Start
             if (equality)
             {
                 Console.WriteLine("The total time for the dissolution of Arogel:"+ iteration);
+                
                 no_end = false;
             }
         }
